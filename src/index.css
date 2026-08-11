@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ============================================================================
+   Admin console tokens
+   ============================================================================
+   Deliberately dark-only. The two church apps ship both themes because they are
+   used all day by many people in varying light; this is an operator tool used
+   in short sessions by one person, and a single well-tuned theme is fewer
+   things to get wrong than two half-tuned ones.
+
+   Colours are shared with the Pastor app so a status shown here means the same
+   thing there: teal is healthy, gold is a warning, rose is stopped.
+   ============================================================================ */
+
+@theme {
+  --font-display: "Sora", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans:    "Noto Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono:    ui-monospace, "Cascadia Mono", Menlo, monospace;
+
+  --color-ink:       #0F1623;
+  --color-ink-800:   #151E2E;
+  --color-surface:   #1A2236;
+  --color-surface-2: #202B42;
+  --color-border:    #263654;
+
+  --color-teal:   #00C9A7;
+  --color-gold:   #F5A623;
+  --color-rose:   #FF6B8A;
+  --color-sky:    #38BDF8;
+  --color-violet: #A78BFA;
+
+  /* Label colour for anything sitting on a brand fill. 8.55:1 on teal. */
+  --color-on-accent: #08121F;
+
+  --color-text:       #E8EEF8;
+  --color-text-dim:   #A9BAD4;   /* 8.4:1 on surface */
+  --color-text-muted: #7D90AE;   /* 4.6:1 on surface — clears AA */
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Never rely on colour alone, and never remove the ring. Keyboard is the
+   primary input for an operator working through a list of churches. */
+:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 6px;
+  border: 2px solid var(--color-ink);
+}
+
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* The reduced-motion block above neutralises this to a near-zero duration,
+   which is the intended outcome: the icon still marks "busy", it just stops
+   rotating for anyone who asked for that. */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.9s linear infinite; }
